@@ -4,7 +4,11 @@ var _voices = [];
 var SpeechSynthesis = function() {
     this.pending = false;
     this.speaking = false;
-    this.paused = false;
+	this.paused = false;
+	
+	exec(function(voices) {
+		_voices = voices;
+	}, null, "SpeechSynthesis", "startup", []);
 };
 
 SpeechSynthesis.prototype.speak = function(utterance) {
@@ -45,12 +49,6 @@ SpeechSynthesis.prototype.resume = function() {
 };
 
 SpeechSynthesis.prototype.getVoices = function() {
-    if (!_voices.length) {
-        exec(function(voices) {
-            _voices = voices;
-        }, null, "SpeechSynthesis", "startup", []);
-    }
-
 	return _voices;
 };
 
